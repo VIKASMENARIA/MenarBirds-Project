@@ -661,6 +661,15 @@ img {
         margin: 0; /* Align to the right on desktop */
     }
 }
+/* =====================================================
+    9. LOGO STYLES (NEW)
+=====================================================
+*/
+.nav__logo img {
+    max-height: 100px;  /* <-- This controls your logo size */
+    width: auto;       /* This maintains the aspect ratio */
+    display: block;
+}
 
 /* ======== MAP STYLES ======== */
 .map-container {

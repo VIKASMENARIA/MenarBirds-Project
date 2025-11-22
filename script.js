@@ -1,18 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Navbar Scroll Effect
+
+    // --- Initialize Lenis Smooth Scroll ---
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Custom easing function
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+    });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // --- Navbar Animation ---
     const navbar = document.querySelector('.navbar');
 
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(26, 47, 37, 0.98)';
-            navbar.style.padding = '10px 0';
+            navbar.classList.add('floating');
         } else {
-            navbar.style.background = 'rgba(26, 47, 37, 0.95)';
-            navbar.style.padding = '15px 0';
+            navbar.classList.remove('floating');
         }
     });
 
-    // Intersection Observer for Animations
+    // --- Intersection Observer for Animations ---
     const observerOptions = {
         threshold: 0.1,
         rootMargin: "0px 0px -50px 0px"
@@ -32,20 +49,18 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 
-    // Smooth Scroll for Anchor Links
+    // --- Smooth Scroll for Anchor Links (Updated for Lenis) ---
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
+                lenis.scrollTo(target); // Use Lenis for scrolling
             }
         });
     });
 
-    // Mobile Menu Toggle (Simple)
+    // --- Mobile Menu Toggle ---
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
 
@@ -60,35 +75,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 navLinks.style.width = '100%';
                 navLinks.style.background = 'rgba(26, 47, 37, 0.98)';
                 navLinks.style.padding = '20px';
+                navLinks.style.borderRadius = '0 0 20px 20px';
             }
         });
     }
 
-    // Flying Bird Animation
+    // --- Flying Bird Animation ---
     function createBird() {
         const bird = document.createElement('div');
         bird.classList.add('flying-bird');
         bird.innerHTML = '<i class="fas fa-dove"></i>';
-        bird.style.top = (Math.random() * 30 + 10) + '%'; // Top 10-40%
-        bird.style.animationDuration = (Math.random() * 10 + 15) + 's'; // 15-25s duration
-        bird.style.fontSize = (Math.random() * 1 + 1.5) + 'rem'; // Random size
+        bird.style.top = (Math.random() * 30 + 10) + '%';
+        bird.style.animationDuration = (Math.random() * 10 + 15) + 's';
+        bird.style.fontSize = (Math.random() * 1 + 1.5) + 'rem';
         document.body.appendChild(bird);
 
-        // Remove bird after animation
         setTimeout(() => {
             bird.remove();
         }, 25000);
     }
 
-    // Create a bird every 8 seconds
     setInterval(createBird, 8000);
-    createBird(); // Create one immediately
+    createBird();
 
-    // Lightbox Functionality
+    // --- Lightbox Functionality ---
     const lightbox = document.createElement('div');
     lightbox.classList.add('lightbox');
     lightbox.innerHTML = `
-        <span class="lightbox-close">&times;</span>
+        <span class="lightbox-close">×</span>
         <img src="" alt="Lightbox Image">
     `;
     document.body.appendChild(lightbox);
@@ -101,19 +115,36 @@ document.addEventListener('DOMContentLoaded', () => {
         img.addEventListener('click', () => {
             lightboxImg.src = img.src;
             lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
+            lenis.stop(); // Stop scrolling when lightbox is open
         });
     });
 
     lightboxClose.addEventListener('click', () => {
         lightbox.classList.remove('active');
-        document.body.style.overflow = 'auto';
+        lenis.start(); // Resume scrolling
     });
 
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) {
             lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            lenis.start();
         }
     });
+
+    // --- Visitor Counter API Logic (RESET) ---
+    const countElement = document.getElementById('visitor-count');
+
+    // CHANGED NAMESPACE TO RESET COUNT
+    const namespace = 'menarwings-reset-v2025';
+    const key = 'visits';
+
+    fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+        .then(res => res.json())
+        .then(res => {
+            countElement.innerText = res.value;
+        })
+        .catch(() => {
+            // API might be down, show a fallback
+            countElement.innerText = "1";
+        });
 });

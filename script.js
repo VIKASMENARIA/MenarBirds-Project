@@ -1,76 +1,119 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Navbar Scroll Effect
+    const navbar = document.querySelector('.navbar');
 
-    // 1. Feather Icons Replacement
-    // ---------------------------------
-    feather.replace();
-
-    // 2. Mobile Navigation Toggle
-    // ---------------------------------
-    const navToggle = document.getElementById('nav-toggle');
-    const navMenu = document.querySelector('.nav__menu');
-    const navLinks = document.querySelectorAll('.nav__link');
-
-    // Function to toggle the menu
-    const toggleMenu = () => {
-        navMenu.classList.toggle('nav__menu--open');
-        // Change icon to 'x' when menu is open
-        if (navMenu.classList.contains('nav__menu--open')) {
-            navToggle.innerHTML = '<i data-feather="x"></i>';
-        } else {
-            navToggle.innerHTML = '<i data-feather="menu"></i>';
-        }
-        feather.replace(); // Re-run feather to draw the new icon
-    };
-
-    // Open/close menu on toggle click
-    navToggle.addEventListener('click', toggleMenu);
-
-    // Close menu when a nav link is clicked (good for single-page apps)
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (navMenu.classList.contains('nav__menu--open')) {
-                toggleMenu();
-            }
-        });
-    });
-
-    // 3. Sticky Header on Scroll
-    // ---------------------------------
-    const header = document.querySelector('.header');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
-            header.classList.add('header--scrolled');
+            navbar.style.background = 'rgba(26, 47, 37, 0.98)';
+            navbar.style.padding = '10px 0';
         } else {
-            header.classList.remove('header--scrolled');
+            navbar.style.background = 'rgba(26, 47, 37, 0.95)';
+            navbar.style.padding = '15px 0';
         }
     });
 
-    // 4. Fade-in Animations on Scroll (Intersection Observer)
-    // ---------------------------------
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    // Intersection Observer for Animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+    };
 
-    // Create the observer
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            // If the element is in the viewport
             if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target); // Stop observing once animated
+                entry.target.classList.add('animate-active');
+                observer.unobserve(entry.target);
             }
         });
-    }, {
-        threshold: 0.1 // Trigger when 10% of the element is visible
-    });
+    }, observerOptions);
 
-    // Observe each animated element
+    const animatedElements = document.querySelectorAll('[data-animate]');
     animatedElements.forEach(el => {
         observer.observe(el);
     });
 
-    // 5. Update Footer Year
-    // ---------------------------------
-    const yearSpan = document.getElementById('year');
-    if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
+    // Smooth Scroll for Anchor Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Mobile Menu Toggle (Simple)
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'rgba(26, 47, 37, 0.98)';
+                navLinks.style.padding = '20px';
+            }
+        });
     }
+
+    // Flying Bird Animation
+    function createBird() {
+        const bird = document.createElement('div');
+        bird.classList.add('flying-bird');
+        bird.innerHTML = '<i class="fas fa-dove"></i>';
+        bird.style.top = (Math.random() * 30 + 10) + '%'; // Top 10-40%
+        bird.style.animationDuration = (Math.random() * 10 + 15) + 's'; // 15-25s duration
+        bird.style.fontSize = (Math.random() * 1 + 1.5) + 'rem'; // Random size
+        document.body.appendChild(bird);
+
+        // Remove bird after animation
+        setTimeout(() => {
+            bird.remove();
+        }, 25000);
+    }
+
+    // Create a bird every 8 seconds
+    setInterval(createBird, 8000);
+    createBird(); // Create one immediately
+
+    // Lightbox Functionality
+    const lightbox = document.createElement('div');
+    lightbox.classList.add('lightbox');
+    lightbox.innerHTML = `
+        <span class="lightbox-close">&times;</span>
+        <img src="" alt="Lightbox Image">
+    `;
+    document.body.appendChild(lightbox);
+
+    const galleryItems = document.querySelectorAll('.gallery-item img');
+    const lightboxImg = lightbox.querySelector('img');
+    const lightboxClose = lightbox.querySelector('.lightbox-close');
+
+    galleryItems.forEach(img => {
+        img.addEventListener('click', () => {
+            lightboxImg.src = img.src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        });
+    });
+
+    lightboxClose.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
 });

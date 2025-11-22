@@ -8,32 +8,29 @@
     <meta name="description"
         content="Experience the authentic rural charm and avian diversity of Menar, the Bird Village of Udaipur. Bird walks, homestays, and nature workshops.">
 
-    <!-- Google Fonts: Handwriting Style -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&display=swap"
         rel="stylesheet">
 
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="container nav-container">
             <a href="#" class="logo">
                 <i class="fas fa-dove text-gold"></i> Menar<span>wings</span>
             </a>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#activities">Activities</a></li>
-                <li><a href="#stay">Stay</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#location">Location</a></li>
+                <li><a href="#home" class="nav-link-item">Home</a></li>
+                <li><a href="#about" class="nav-link-item">About</a></li>
+                <li><a href="#activities" class="nav-link-item">Activities</a></li>
+                <li><a href="#stay" class="nav-link-item">Stay</a></li>
+                <li><a href="#gallery" class="nav-link-item">Gallery</a></li>
+                <li><a href="#location" class="nav-link-item">Location</a></li>
                 <li><a href="#contact" class="btn-nav">Book Now</a></li>
             </ul>
             <div class="hamburger">
@@ -42,7 +39,6 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <header id="home" class="hero">
         <div class="hero-overlay"></div>
         <div class="hero-content container">
@@ -60,7 +56,6 @@
         </div>
     </header>
 
-    <!-- About Section -->
     <section id="about" class="about section-padding">
         <div class="container">
             <div class="row">
@@ -90,7 +85,6 @@
                 </div>
                 <div class="col-half image-col" data-animate="slide-left">
                     <div class="image-wrapper tilt-effect">
-                        <!-- Local Image -->
                         <img src="get (1).jpg" alt="Great Crested Grebe swimming">
                         <div class="image-caption">
                             <i class="fas fa-camera"></i> The Great Crested Grebe
@@ -101,7 +95,6 @@
         </div>
     </section>
 
-    <!-- Activities Section -->
     <section id="activities" class="activities section-padding bg-dark">
         <div class="container">
             <div class="section-header text-center">
@@ -112,7 +105,6 @@
             </div>
 
             <div class="cards-grid">
-                <!-- Card 1 -->
                 <div class="activity-card" data-animate="fade-up">
                     <div class="card-icon bounce-anim">
                         <i class="fas fa-binoculars"></i>
@@ -127,7 +119,6 @@
                     </ul>
                 </div>
 
-                <!-- Card 2 -->
                 <div class="activity-card" data-animate="fade-up" style="transition-delay: 0.2s;">
                     <div class="card-icon bounce-anim" style="animation-delay: 0.2s;">
                         <i class="fas fa-camera-retro"></i>
@@ -142,7 +133,6 @@
                     </ul>
                 </div>
 
-                <!-- Card 3 -->
                 <div class="activity-card" data-animate="fade-up" style="transition-delay: 0.4s;">
                     <div class="card-icon bounce-anim" style="animation-delay: 0.4s;">
                         <i class="fas fa-graduation-cap"></i>
@@ -160,13 +150,11 @@
         </div>
     </section>
 
-    <!-- Stay Section -->
     <section id="stay" class="stay section-padding">
         <div class="container">
             <div class="row reverse-mobile">
                 <div class="col-half image-col" data-animate="slide-right">
                     <div class="image-wrapper tilt-effect">
-                        <!-- Local Image -->
                         <img src="get (2).jpg" alt="Rural Rajasthani Mud House">
                         <div class="image-caption">
                             <i class="fas fa-home"></i> Authentic Mud House
@@ -203,7 +191,6 @@
         </div>
     </section>
 
-    <!-- Gallery Section -->
     <section id="gallery" class="gallery section-padding">
         <div class="container">
             <div class="section-header text-center">
@@ -240,7 +227,6 @@
         </div>
     </section>
 
-    <!-- Location Section -->
     <section id="location" class="location section-padding">
         <div class="container">
             <div class="section-header text-center">
@@ -257,7 +243,6 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="cta-section">
         <div class="cta-content text-center">
             <h2>Ready to spread your wings?</h2>
@@ -268,7 +253,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer id="contact" class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -295,13 +279,18 @@
                 <div class="footer-col">
                     <h4>Contact Us</h4>
                     <ul class="contact-list">
-                        <li><i class="fas fa-phone-alt"></i> +91 73399 48916</li>
-                        <!-- <li><i class="fas fa-envelope"></i> info@menarwings.com</li> -->
+                        <li><i class="fas fa-phone-alt"></i> +91 73399 4891</li>
                         <li><i class="fas fa-map-marker-alt"></i> Menar Village, Udaipur, Rajasthan</li>
                     </ul>
                 </div>
             </div>
+
             <div class="footer-bottom text-center">
+                <div class="visitor-counter-wrapper">
+                    <p><i class="fas fa-eye"></i> Website Visits: <span id="visitor-count" class="count-anim">...</span>
+                    </p>
+                </div>
+
                 <p class="credits mb-2">
                     <i class="fas fa-camera"></i> Photo Credits:
                     <a href="https://www.instagram.com/umeshmenariya/" target="_blank"
@@ -309,11 +298,12 @@
                     <a href="https://www.instagram.com/rajasthan_tourism/" target="_blank"
                         class="credit-link">@rajasthan_tourism</a>
                 </p>
-                <p>&copy; 2025 Menarwings. All rights reserved.</p>
+                <p>© 2025 Menarwings. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
     <script src="script.js"></script>
 </body>
 
